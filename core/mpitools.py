@@ -1,4 +1,4 @@
-from param import Param
+from param2d import Param
 import numpy as np
 try:
     from mpi4py import MPI

@@ -1,4 +1,4 @@
-from param import Param
+from param2d import Param
 from numpy import zeros, zeros_like, roll
 from gmg.hierarchy import Gmg
 import fortran_advection as fa
@@ -69,7 +69,7 @@ class Operators(Param):
             print('-'*50)
             print(' Multigrid hierarchy')
             print('-'*50)
-        
+
         if hasattr(self, 'qgoperator'):
             pp['qgoperator'] = True
             pp['Rd'] = self.Rd
@@ -104,7 +104,7 @@ class Operators(Param):
             self.cst[4] = 0 # unused
             # should be updated at each timestep
             # self.cst[3]=param.umax
-            
+
         else:
             self.fortran_adv = fa.adv_upwind
             self.cst[0] = grid.dx
@@ -378,7 +378,7 @@ class Operators(Param):
         # dw[1:-1, 1:-1] -= self.coefV[1:-1, 1:-1]*self.diffz(V)*self.f0
         # dw[:, :nh+1] = 0
         # dw[:, -nh-1:] = 0
-        y *= self.msk        
+        y *= self.msk
         self.fill_halo(y)
         dw[:, :] += y
 
@@ -426,7 +426,7 @@ class Operators(Param):
             #                           {'maxite': 2,
             #                            'tol': 1e-8,
             #                            'verbose': False})
-            
+
         else:
             # compute to machine accuracy
             if self.first_time:
@@ -448,7 +448,7 @@ class Operators(Param):
                 # make sure psi has zero mean (to avoid the drift)
                 psim = self.domain_integration(psi) / self.area
                 psi -= psim
-        
+
 
         # don't apply the fill_halo on it
         # [because fill_halo, as it is, is applying periodic BC]
@@ -463,7 +463,7 @@ class Operators(Param):
 
 
         self.first_time = False
-            
+
         # compute (u,v) @ U,V points from psi @ cell corner
         fo.computeorthogradient(self.msk, psi, self.dx, self.dy, self.nh, u, v)
         # self.fill_halo(u)

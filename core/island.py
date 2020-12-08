@@ -1,5 +1,5 @@
 from numpy import ones, arange, meshgrid, sum, int8, sqrt, roll, zeros
-from param import Param
+from param2d import Param
 from fortran_operators import celltocorner
 
 

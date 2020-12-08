@@ -1,4 +1,4 @@
-from param import Param
+from param2d import Param
 from operators import Operators
 from variables import Var
 from timescheme import Timescheme
@@ -129,7 +129,7 @@ class Thermalwind(Param):
         qE = var.get('qE')
         qEneg = qE.copy()
         qEneg[qE>0] = 0.
-        
+
         ke, maxu = fd.computekemaxu(self.msk, u, v, self.nh)
 
         z, z2 = fd.computesumandnorm(self.msk, vort, self.nh)

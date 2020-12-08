@@ -1,6 +1,6 @@
 from __future__ import print_function
 import numpy as np
-from param import Param
+from param2d import Param
 from netCDF4 import Dataset
 import os
 
@@ -32,13 +32,13 @@ class Output(Param):
 
         if self.var_to_save == 'all':
             self.var_to_save = [v for v in self.varname_list]
-            
+
         for v in self.var_to_save:
             if not(v in self.varname_list):
                 raise ValueError('%s is not a model variable' % v\
                 + ' => modify param.var_to_save')
 
-        # prepare the 'fluxes' file        
+        # prepare the 'fluxes' file
         if self.diag_fluxes:
             template = self.expdir+'/%s_flx_%03i.nc'
             if self.nbproc > 1:
@@ -60,7 +60,7 @@ class Output(Param):
         self.diag = diag
 
     def do(self, data, t, kt):
-        """ write history and diag if it's timely 
+        """ write history and diag if it's timely
 
         the model state 'x' and the scalar 'diag' are passed via the
         dictionnary 'data'. This allows to add new variables, e.g. 'fluxes'
@@ -68,13 +68,13 @@ class Output(Param):
         x = data['his']
         diag = data['diag']
         """
-        
+
         if self.first:
             self.first = False
             # self.create_his(self.grid)
             self.nchis = NcfileIO(self.param, self.grid, self.hisfile,
                                   self.param.var_to_save, self.param.varname_list)
-            
+
             self.nchis.create()
             if self.diag_fluxes:
                 self.ncflx = NcfileIO(self.param, self.grid, self.flxfile, self.flxlist, self.flxlist)
@@ -158,9 +158,9 @@ class Output(Param):
             if self.diag_fluxes:
                 filename = self.flxfile.split('flx')[0]+'flx'
                 join(filename)
-                
-            
-            
+
+
+
 class NcfileIO(object):
     """Allow to create() and write() a Netcdf file of 'history' type,
     i.e. a set of model 2D snapshots. Variables were originally the
@@ -244,8 +244,8 @@ class NcfileIO(object):
                 nc.variables[v][self.khis, :, :] = x[iv][nh:-nh, nh:-nh]
 
         self.khis += 1
-    
-    
+
+
 def join(filename):
     ''' Join history files without having to mpirun
 
@@ -298,7 +298,7 @@ def join(filename):
     # copy the attributes
     for att in nc0.ncattrs():
         ncglo.setncattr(att, nc0.getncattr(att))
-    
+
     for var in varlist1D:
         vloc = nc0.variables[var]
         dim = vloc.dimensions[0]
