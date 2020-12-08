@@ -1,4 +1,4 @@
-from param import Param
+from param2d import Param
 from grid import Grid
 from fluid2d import Fluid2d
 import numpy as np

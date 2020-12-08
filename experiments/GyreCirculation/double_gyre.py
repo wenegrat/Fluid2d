@@ -1,5 +1,5 @@
 from fluid2d import Fluid2d
-from param import Param
+from param2d import Param
 from grid import Grid
 import numpy as np
 

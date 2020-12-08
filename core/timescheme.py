@@ -1,5 +1,5 @@
 import numpy as np
-from param import Param
+from param2d import Param
 from variables import Var
 
 

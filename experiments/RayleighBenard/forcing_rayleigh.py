@@ -1,4 +1,4 @@
-from param import Param
+from param2d import Param
 
 
 class Forcing:
